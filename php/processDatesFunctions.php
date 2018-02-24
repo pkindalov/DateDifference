@@ -45,16 +45,38 @@
 	}
 
 
+	function dateInformation($format, $dateStr1, $dateStr2){
+		$dateOne = date_create($dateStr1);
+		$dateTwo = date_create($dateStr2);
+
+		$interval = date_diff($dateOne, $dateTwo);
+
+
+		switch ($format) {
+			case '%Y':
+				return $interval->format('%Y years');
+				break;
+			case '%R':
+				return $interval->format('%a days');
+				break;	
+			case '%m':
+					return $interval->format('%m months');
+					break;	
+			case '%Y%M%D':
+					return $interval->format('%y Year/s %m Month/s %d Day/s');
+					break;		
+		}
+
+	}
 
 
 
 
 
+	function processDateFromForm($dateStr, $dateStr2,  $date_field){
 
-	function processDateFromForm($dateStr, $date_field){
-
-		if(mb_strlen($dateStr) == 0){
-			echo "<span style='color: red'>You forgot to pick a date in ".$date_field."</span>";
+		if(mb_strlen($dateStr) == 0 || mb_strlen($dateStr2) == 0){
+			echo "<span style='color: red'>You forgot to pick a date</span>";
 			return;
 		}
 
@@ -62,12 +84,33 @@
 		$day = $arrStr[0];
 		$month = $arrStr[1];
 		$year = $arrStr[2];
+
+		$arrStr2 = explode(" ", $dateStr2);
+		$dayDateStr2 = $arrStr2[0];
+		$monthDateStr2 = $arrStr2[1];
+		$yearDateStr2 = $arrStr2[2];
+
 		$monthNumber = getMontNumber($month);
+		$monthNumberDateStr2 = getMontNumber($monthDateStr2);
 
 		$dateISOformat =$year."-".$monthNumber."-".$day;
-		$pastYears = dateInformation('%Y');
+		$date2ISOformat = $yearDateStr2."-".$monthNumberDateStr2."-".$dayDateStr2;
 
-		return $dateISOformat;
+		// echo $dateISOformat."<br />".$date2ISOformat;
+
+		$pastYearsBetweenDates = dateInformation('%Y', $dateISOformat, $date2ISOformat);
+		$pastDaysBetweenDates = dateInformation("%R", $dateISOformat, $date2ISOformat);
+		$pastMontsBetweenDates = dateInformation("%m", $dateISOformat, $date2ISOformat);
+		$pastYearsMonthsDays = dateInformation('%Y%M%D', $dateISOformat, $date2ISOformat);
+
+
+		echo "<hr /><br />";
+		echo $pastYearsBetweenDates."<br />";
+		echo $pastMontsBetweenDates."<br />";
+		echo $pastDaysBetweenDates."<br />";
+		echo $pastYearsMonthsDays."<br />";
+
+		// return $dateISOformat;
 		
 		// return "The number of the mont ".$month." is ".$monthNumber."<br />";
 		
@@ -87,8 +130,8 @@
 		
 		// echo $firstDate."<br />".$secondDate."<br />";
 
-		echo processDateFromForm($firstDate, 'first field')."<br />";
-		echo processDateFromForm($secondDate, 'second field');
+		processDateFromForm($firstDate, $secondDate, 'first field');
+		// echo processDateFromForm($secondDate, 'second field');
 	}
 
 
