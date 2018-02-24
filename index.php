@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Information about differencies between two dates</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 <link rel="stylesheet" href="/DateDifferencies/css/styles.css" />
 
@@ -21,10 +23,10 @@
 					<form method="post" action="/DateDifferencies/php/processDates.php">
 						<!-- input class="form-control" name="date" /> -->
 						<label for="firstDate">Choose from here first date</label>
-						<input type="text" name="firstDate" class="datepicker" value="12 February, 2018" /><br />
+						<input type="text" name="firstDate" class="datepicker" /><br />
 
 						<label for="secondDate">Choose from here second date</label>
-						<input type="text" name="secondDate" class="datepicker" value="20 April, 2018" />
+						<input type="text" name="secondDate" class="datepicker" />
 
 						<button class="btn waves-effect waves-light" type="submit" name="action">Submit
     <i class="material-icons right">send</i>
